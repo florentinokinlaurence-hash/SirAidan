@@ -1,0 +1,336 @@
+//1.MainMethod
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ToDoList list = new ToDoList();
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\n1. Add task\n2. Delete task\n3. View all tasks\n4. Search for a task\n5. Exit");
+            System.out.print("Enter choice: ");
+            String input = sc.nextLine().trim();
+
+            int choice;
+            try {
+                choice = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+                continue;
+            }
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter task title: ");
+                    String title = sc.nextLine().trim();
+                    if (title.isEmpty()) {
+                        System.out.println("Title cannot be empty.");
+                    } else {
+                        list.addTask(title);
+                        System.out.println("Task added!");
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Enter task title to delete: ");
+                    String toDelete = sc.nextLine().trim();
+                    boolean deleted = list.deleteTask(toDelete);
+                    System.out.println(deleted ? "Task deleted." : "Task not found.");
+                    break;
+
+                case 3:
+                    list.printTasks();
+                    break;
+
+                case 4:
+                    System.out.print("Enter title to search: ");
+                    String query = sc.nextLine().trim();
+                    boolean found = list.contains(query);
+                    System.out.println(found ? "Found!" : "Not found.");
+                    break;
+
+                case 5:
+                    System.out.println("Exiting. Goodbye!");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please choose between 1 and 5.");
+                    break;
+            }
+        }
+
+        sc.close();
+    }
+}
+
+
+
+//2.ToDoList
+
+package com.mycompany.main;
+
+
+public class ToDoList {
+    // Internal node class to hold each task
+    static class TaskNode {
+        String title;
+        TaskNode next;
+        TaskNode(String title) {
+            this.title = title;
+            this.next = null;
+        }
+    }
+
+    private TaskNode head;
+
+    /**
+     * Initialize an empty to-do list.
+     */
+    public ToDoList() {
+        head = null;
+    }
+
+    /**
+     * Adds a task to the end of the list.
+     */
+    public void addTask(String title) {
+        TaskNode newNode = new TaskNode(title);
+        if (head == null) {
+            head = newNode;
+        } else {
+            TaskNode curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newNode;
+        }
+    }
+
+    /**
+     * Delete the first occurrence of a task by title.
+     * @return true if deleted; false if not found.
+     */
+    public boolean deleteTask(String title) {
+        if (head == null) {
+            return false;
+        }
+        if (head.title.equals(title)) {
+            head = head.next;
+            return true;
+        }
+        TaskNode curr = head;
+        while (curr.next != null && !curr.next.title.equals(title)) {
+            curr = curr.next;
+        }
+        if (curr.next == null) {
+            return false;
+        }
+        curr.next = curr.next.next;
+        return true;
+    }
+
+    /**
+     * Checks if a task exists by title.
+     */
+    public boolean contains(String title) {
+        TaskNode curr = head;
+        while (curr != null) {
+            if (curr.title.equals(title)) {
+                return true;
+            }
+            curr = curr.next;
+        }
+        return false;
+    }
+
+    /**
+     * Print all tasks. If none, prints "(none)".
+     */
+    public void printTasks() {
+        if (head == null) {
+            System.out.println("Your Tasks: (none)");
+        } else {
+            System.out.println("Your Tasks:");
+            TaskNode curr = head;
+            while (curr != null) {
+                System.out.println("- " + curr.title);
+                curr = curr.next;
+            }
+        }
+    }
+
+    /**
+     * Counts the number of tasks in the list.
+     */
+    public int countTasks() {
+        int count = 0;
+        TaskNode curr = head;
+        while (curr != null) {
+            count++;
+            curr = curr.next;
+        }
+        return count;
+    }
+
+    /**
+     * Inserts a new task at the given 0-based index.
+     * @return true if insertion succeeded; false if index is out of range.
+     */
+    public boolean insertAt(String title, int index) {
+        if (index < 0) {
+            return false;
+        }
+        TaskNode newNode = new TaskNode(title);
+        if (index == 0) {
+            newNode.next = head;
+            head = newNode;
+            return true;
+        }
+
+        int currentIndex = 0;
+        TaskNode curr = head;
+        while (curr != null && currentIndex < index - 1) {
+            curr = curr.next;
+            currentIndex++;
+        }
+
+        if (curr == null) {
+            // index is greater than list size
+            return false;
+        }
+
+        newNode.next = curr.next;
+        curr.next = newNode;
+        return true;
+    }
+}
+
+//3.TaskNode
+
+package com.mycompany.tasknode;
+
+
+public class TaskNode {
+    String title;
+    TaskNode next;
+
+    public TaskNode(String title) {
+        this.title = title;
+        this.next = null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
