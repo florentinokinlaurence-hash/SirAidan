@@ -86,16 +86,12 @@ public class ToDoList {
 
     private TaskNode head;
 
-    /**
-     * Initialize an empty to-do list.
-     */
+    
     public ToDoList() {
         head = null;
     }
 
-    /**
-     * Adds a task to the end of the list.
-     */
+    
     public void addTask(String title) {
         TaskNode newNode = new TaskNode(title);
         if (head == null) {
@@ -109,10 +105,7 @@ public class ToDoList {
         }
     }
 
-    /**
-     * Delete the first occurrence of a task by title.
-     * @return true if deleted; false if not found.
-     */
+    
     public boolean deleteTask(String title) {
         if (head == null) {
             return false;
@@ -132,9 +125,7 @@ public class ToDoList {
         return true;
     }
 
-    /**
-     * Checks if a task exists by title.
-     */
+    
     public boolean contains(String title) {
         TaskNode curr = head;
         while (curr != null) {
@@ -146,9 +137,7 @@ public class ToDoList {
         return false;
     }
 
-    /**
-     * Print all tasks. If none, prints "(none)".
-     */
+    
     public void printTasks() {
         if (head == null) {
             System.out.println("Your Tasks: (none)");
@@ -162,9 +151,7 @@ public class ToDoList {
         }
     }
 
-    /**
-     * Counts the number of tasks in the list.
-     */
+    
     public int countTasks() {
         int count = 0;
         TaskNode curr = head;
@@ -175,10 +162,7 @@ public class ToDoList {
         return count;
     }
 
-    /**
-     * Inserts a new task at the given 0-based index.
-     * @return true if insertion succeeded; false if index is out of range.
-     */
+    
     public boolean insertAt(String title, int index) {
         if (index < 0) {
             return false;
